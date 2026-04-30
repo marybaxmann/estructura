@@ -47,6 +47,21 @@ def cargar_dataset(ruta_csv):
     return True
 
 
+def cargar_amigos(ruta_csv):
+    if not os.path.exists(ruta_csv):
+        print(f"[AVISO] No se encontró archivo de amigos: {ruta_csv}")
+        return
+
+    with open(ruta_csv, encoding="utf-8") as archivo:
+        lector = csv.DictReader(archivo)
+        for fila in lector:
+            usuario = fila["usuario"].strip().lower()
+            amigo = fila["amigo"].strip().lower()
+            indice_usuarios.agregar_contacto(usuario, amigo)
+
+    print("Amigos cargados correctamente.")
+
+
 def buscar_posts_por_termino():
     consulta = input("Ingresa término(s) a buscar (separados por espacio): ").strip()
     if not consulta:
@@ -112,6 +127,8 @@ def mostrar_menu():
 if __name__ == "__main__":
     if not cargar_dataset("Tweets.csv"):
         exit(1)
+
+    cargar_amigos("amigos.csv")
 
     while True:
         mostrar_menu()

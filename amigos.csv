@@ -1,0 +1,15 @@
+usuario,amigo
+southwestair,united
+southwestair,jetblue
+united,americanair
+united,usairways
+americanair,southwestair
+americanair,jetblue
+usairways,united
+usairways,jetblue
+jetblue,southwestair
+jetblue,americanair
+jetsettingisa,kbosko
+kbosko,jetsettingisa
+thusspeaksnell,svscyber
+svscyber,thusspeaksnell
