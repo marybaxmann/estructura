@@ -116,9 +116,9 @@ def buscar_contactos_usuario():
 
 def mostrar_menu():
     print("=" * 50)
-    print("  Sistema de Búsqueda - Red Social (Tweets)")
+    print("  Sistema de Busqueda - Red Social (Tweets)")
     print("=" * 50)
-    print("  1. Buscar posts por término(s)")
+    print("  1. Buscar posts por termino(s)")
     print("  2. Buscar contactos de un usuario")
     print("  3. Salir")
     print("=" * 50)
@@ -132,7 +132,7 @@ if __name__ == "__main__":
 
     while True:
         mostrar_menu()
-        opcion = input("Selecciona una opción: ").strip()
+        opcion = input("Selecciona una opcion: ").strip()
 
         if opcion == "1":
             buscar_posts_por_termino()
