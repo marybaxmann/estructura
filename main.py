@@ -1,4 +1,3 @@
-# main.py
 import csv
 import os
 
@@ -62,6 +61,22 @@ def cargar_amigos(ruta_csv):
     print("Amigos cargados correctamente.")
 
 
+def cargar_likes(ruta_csv):
+    if not os.path.exists(ruta_csv):
+        print(f"[AVISO] No se encontró archivo de likes: {ruta_csv}")
+        return
+
+    with open(ruta_csv, encoding="utf-8") as archivo:
+        lector = csv.DictReader(archivo)
+        for fila in lector:
+            post_id = int(fila["post_id"].strip())
+            usuario = fila["usuario"].strip().lower()
+            if post_id < len(posts):
+                posts[post_id].agregar_like(usuario)
+
+    print("Likes cargados correctamente.")
+
+
 def buscar_posts_por_termino():
     consulta = input("Ingresa término(s) a buscar (separados por espacio): ").strip()
     if not consulta:
@@ -116,9 +131,9 @@ def buscar_contactos_usuario():
 
 def mostrar_menu():
     print("=" * 50)
-    print("  Sistema de Búsqueda - Red Social (Tweets)")
+    print("  Sistema de Busqueda - Red Social (Tweets)")
     print("=" * 50)
-    print("  1. Buscar posts por término(s)")
+    print("  1. Buscar posts por termino(s)")
     print("  2. Buscar contactos de un usuario")
     print("  3. Salir")
     print("=" * 50)
@@ -129,10 +144,11 @@ if __name__ == "__main__":
         exit(1)
 
     cargar_amigos("amigos.csv")
+    cargar_likes("likes.csv")
 
     while True:
         mostrar_menu()
-        opcion = input("Selecciona una opción: ").strip()
+        opcion = input("Selecciona una opcion: ").strip()
 
         if opcion == "1":
             buscar_posts_por_termino()
@@ -143,3 +159,7 @@ if __name__ == "__main__":
             break
         else:
             print("Opción inválida.\n")
+
+
+
+
