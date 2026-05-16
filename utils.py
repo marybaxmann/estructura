@@ -1,19 +1,20 @@
 # utils.py
 import re
+import csv
+import os
 
-STOPWORDS = {
-    "a", "an", "the", "in", "on", "at", "to", "for", "of", "with", "by",
-    "from", "up", "about", "into", "and", "but", "or", "nor", "so", "yet",
-    "i", "me", "my", "we", "our", "you", "your", "he", "him", "his",
-    "she", "her", "it", "its", "they", "them", "their", "this", "these",
-    "those", "who", "which", "what", "is", "are", "was", "were", "be",
-    "been", "being", "have", "has", "had", "do", "does", "did", "will",
-    "would", "shall", "should", "may", "might", "must", "can", "could",
-    "not", "no", "just", "now", "then", "here", "there", "when", "where",
-    "how", "all", "more", "some", "only", "very", "as", "also", "get",
-    "got", "im", "dont", "cant", "wont", "rt", "amp", "via", "http",
-    "https", "co"
-}
+def cargar_stopwords(ruta_csv="stopwords.csv"):
+    stopwords = set()
+    if not os.path.exists(ruta_csv):
+        print("[AVISO] No se encontró stopwords.csv")
+        return stopwords
+    with open(ruta_csv, encoding="utf-8") as archivo:
+        lector = csv.DictReader(archivo)
+        for fila in lector:
+            stopwords.add(fila["palabra"].strip().lower())
+    return stopwords
+
+STOPWORDS = cargar_stopwords()
 
 def limpiar_texto(texto):
     texto = texto.lower()
