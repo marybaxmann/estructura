@@ -18,37 +18,28 @@ def cargar_dataset(ruta_csv):
 
     print(f"Cargando dataset desde '{ruta_csv}'...")
 
-    ids_vistos = set()  # ← control de duplicados por tweet_id
-
     with open(ruta_csv, encoding="utf-8") as archivo:
         lector = csv.DictReader(archivo)
         for i, fila in enumerate(lector):
-            texto    = fila.get("text", "").strip()
-            autor    = fila.get("name", f"user_{i}").strip()
+            texto     = fila.get("text", "").strip()
+            autor     = fila.get("name", f"user_{i}").strip()
             aerolinea = fila.get("airline", "").strip()
-            tweet_id  = fila.get("tweet_id", str(i)).strip()  # ← usa ID real
+
+            post = Post(post_id=i, texto=texto, autor=autor)
+            posts.append(post)
 
             if not texto:
                 continue
 
-            # Validación de duplicados: si el tweet_id ya fue procesado, se omite
-            if tweet_id in ids_vistos:
-                continue
-            ids_vistos.add(tweet_id)
-
-            post = Post(post_id=len(posts), texto=texto, autor=autor)
-            posts.append(post)
-
             indice_usuarios.agregar_usuario(autor)
 
-            # DECISIÓN DE DISEÑO: columna 'airline' como contacto del autor
             if aerolinea:
                 indice_usuarios.agregar_contacto(autor, aerolinea)
                 indice_usuarios.agregar_usuario(aerolinea)
 
             palabras = limpiar_texto(texto)
             for palabra in palabras:
-                indice_posts.agregar(palabra, len(posts) - 1)
+                indice_posts.agregar(palabra, i)
 
     print(f"Dataset cargado: {len(posts)} posts | "
           f"{indice_posts.total_terminos()} términos únicos | "
@@ -103,7 +94,6 @@ def buscar_posts_por_termino():
     print(f"Buscando posts con: {terminos}")
 
     if len(terminos) == 1:
-
         lista = indice_posts.buscar(terminos[0])
 
         if lista is None:
@@ -113,7 +103,6 @@ def buscar_posts_por_termino():
         ids_encontrados = lista
 
     else:
-
         ids_encontrados = indice_posts.buscar_multiples(terminos)
 
         if ids_encontrados.esta_vacia():
@@ -126,11 +115,8 @@ def buscar_posts_por_termino():
     actual = ids_encontrados.cabeza
 
     while actual is not None and contador < 10:
-
         post_id = actual.dato
-
         posts[post_id].mostrar()
-
         actual = actual.siguiente
         contador += 1
 
@@ -146,7 +132,6 @@ def buscar_contactos_usuario():
 
     if lista_contactos is None:
         print(f"El usuario '@{nombre}' no está registrado.")
-        # Muestra hasta 5 usuarios existentes como referencia
         print("Algunos usuarios registrados:")
         contador = 0
         for usuario_clave in indice_usuarios.indice:
@@ -165,7 +150,7 @@ def buscar_contactos_usuario():
     lista_contactos.mostrar()
     print()
 
-# main.py — agregar función nueva
+
 def buscar_likes_de_post():
     entrada = input("Ingresa el ID del post: ").strip()
     if not entrada.isdigit():
@@ -178,6 +163,7 @@ def buscar_likes_de_post():
     post = posts[post_id]
     post.mostrar()
     print()
+
 
 def mostrar_menu():
     print("=" * 50)
@@ -199,23 +185,17 @@ if __name__ == "__main__":
     cargar_likes("likes.csv")
 
     while True:
-
         mostrar_menu()
-
         opcion = input("Selecciona una opcion: ").strip()
 
         if opcion == "1":
             buscar_posts_por_termino()
-
         elif opcion == "2":
             buscar_contactos_usuario()
-
         elif opcion == "3":
             buscar_likes_de_post()
-
         elif opcion == "4":
             print("Programa finalizado.")
             break
-
         else:
             print("Opción inválida.\n")
