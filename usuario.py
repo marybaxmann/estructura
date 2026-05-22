@@ -1,4 +1,3 @@
-# usuario.py
 from lista_enlazada import ListaEnlazada
 
 class Usuario:

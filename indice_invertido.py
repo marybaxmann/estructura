@@ -1,4 +1,3 @@
-# indice_invertido.py
 from lista_enlazada import ListaEnlazada
 from usuario import Usuario
 
@@ -6,7 +5,7 @@ class IndiceInvertidoPosts:
 
     def __init__(self):
         self.vocabulario = {}
-
+#agregar
     def agregar(self, palabra, post_id):
 
         if palabra not in self.vocabulario:
@@ -14,7 +13,7 @@ class IndiceInvertidoPosts:
 
         if not self.vocabulario[palabra].existe(post_id):
             self.vocabulario[palabra].insertar(post_id)
-
+#buscar
     def buscar(self, palabra):
         return self.vocabulario.get(palabra, None)
 
@@ -41,7 +40,7 @@ class IndiceInvertidoPosts:
                 return resultado
 
         return resultado
-
+#interseccion
     def _interseccion(self, lista_a, lista_b):
 
         resultado = ListaEnlazada()

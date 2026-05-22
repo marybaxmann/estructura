@@ -1,4 +1,3 @@
-# lista_enlazada.py
 from nodo import Nodo
 
 class ListaEnlazada:
@@ -6,13 +5,13 @@ class ListaEnlazada:
     def __init__(self):
         self.cabeza = None
         self.tamanio = 0
-
+#insertar
     def insertar(self, dato):
         nuevo = Nodo(dato)
         nuevo.siguiente = self.cabeza
         self.cabeza = nuevo
         self.tamanio += 1
-
+#existe
     def existe(self, dato):
         actual = self.cabeza
 
@@ -47,6 +46,7 @@ class ListaEnlazada:
     def esta_vacia(self):
         return self.cabeza is None
 
+#eliminar
     def eliminar(self, dato):
 
         if self.cabeza is None:
@@ -81,7 +81,7 @@ class ListaEnlazada:
             anterior = anterior.siguiente
 
         return False
-
+#vaciar
     def vaciar(self):
 
         while self.cabeza is not None:

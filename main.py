@@ -22,7 +22,7 @@ def cargar_dataset(ruta_csv):
         lector = csv.DictReader(archivo)
         for i, fila in enumerate(lector):
             texto     = fila.get("text", "").strip()
-            autor     = fila.get("name", f"user_{i}").strip()
+            autor     = fila.get("name", f"user_{i}").strip().lower()
             aerolinea = fila.get("airline", "").strip()
 
             post = Post(post_id=i, texto=texto, autor=autor)
@@ -33,9 +33,9 @@ def cargar_dataset(ruta_csv):
 
             indice_usuarios.agregar_usuario(autor)
 
-            if aerolinea:
-                indice_usuarios.agregar_contacto(autor, aerolinea)
-                indice_usuarios.agregar_usuario(aerolinea)
+            # if aerolinea:
+            #     indice_usuarios.agregar_contacto(autor, aerolinea)
+            #     indice_usuarios.agregar_usuario(aerolinea)
 
             palabras = limpiar_texto(texto)
             for palabra in palabras:
@@ -161,7 +161,8 @@ def buscar_likes_de_post():
         print(f"No existe un post con ID {post_id}.")
         return
     post = posts[post_id]
-    post.mostrar()
+    post.mostrar()         
+    post.mostrar_likes()    
     print()
 
 
