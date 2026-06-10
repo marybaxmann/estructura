@@ -48,48 +48,31 @@ class ListaEnlazada:
 
 #eliminar
     def eliminar(self, dato):
-
         if self.cabeza is None:
             return False
-
         # eliminar cabeza
         if self.cabeza.dato == dato:
-
             temp = self.cabeza
             self.cabeza = self.cabeza.siguiente
-
             del temp
-
             self.tamanio -= 1
             return True
-
         anterior = self.cabeza
-
         while anterior.siguiente is not None:
-
             if anterior.siguiente.dato == dato:
-
                 temp = anterior.siguiente
-
                 anterior.siguiente = temp.siguiente
-
                 del temp
-
                 self.tamanio -= 1
                 return True
-
             anterior = anterior.siguiente
-
         return False
+    
 #vaciar
     def vaciar(self):
-
         while self.cabeza is not None:
-
             temp = self.cabeza
-
             self.cabeza = self.cabeza.siguiente
-
             del temp
+        self.tamanio = 0 
 
-        self.tamanio = 0

@@ -4,7 +4,6 @@ import os
 from lista_enlazada import ListaEnlazada
 
 def cargar_stopwords(ruta_csv="stopwords.csv"):
-    """Carga las stopwords en una ListaEnlazada propia (sin usar set/hashmap)."""
     stopwords = ListaEnlazada()
     if not os.path.exists(ruta_csv):
         print("[AVISO] No se encontró stopwords.csv")
@@ -20,7 +19,6 @@ def cargar_stopwords(ruta_csv="stopwords.csv"):
 STOPWORDS = cargar_stopwords()
 
 def limpiar_texto(texto):
-    """Normaliza, elimina URLs/menciones/hashtags y filtra stopwords usando la lista enlazada."""
     texto = texto.lower()
     texto = re.sub(r'http\S+|www\S+', '', texto)
     texto = re.sub(r'@\w+', '', texto)
@@ -31,5 +29,4 @@ def limpiar_texto(texto):
 
 
 def limpiar_consulta(consulta):
-    """Aplica la misma limpieza que en la carga, para coherencia en la búsqueda."""
     return limpiar_texto(consulta)

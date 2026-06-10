@@ -1,5 +1,13 @@
 # Proyecto Estructuras de Datos — Red Social (Tweets)
-**Curso:** Estructuras de Datos 
+## Objetivo del proyecto
+
+Implementar un sistema de búsqueda textual basado en índices invertidos utilizando listas enlazadas y memoria dinámica, simulando funcionalidades básicas de una red social.
+
+## Dataset utilizado
+
+Se utilizó el dataset “Twitter US Airline Sentiment”, compuesto por aproximadamente 14 mil tweets relacionados con aerolíneas estadounidenses.
+
+Además, se generaron archivos adicionales (`amigos.csv` y `likes.csv`) para simular relaciones sociales y reacciones entre usuarios.
 
 ## Requisitos
 - Python 3.8 o superior
@@ -11,6 +19,7 @@ python main.py
 ```
 El programa busca automáticamente los archivos `Tweets.csv`, `amigos.csv` y `likes.csv`
 en el mismo directorio.
+
 
 ## Estructura del proyecto
 | Archivo | Descripción |
@@ -24,14 +33,14 @@ en el mismo directorio.
 | `main.py` | Punto de entrada: carga dataset, amigos y likes; menú interactivo |
 
 ## Estructuras de datos implementadas
-- **Lista enlazada simple** (`ListaEnlazada` + `Nodo`): inserción O(1) al inicio, búsqueda O(n), eliminación O(n).
+- **Lista enlazada simple** (`ListaEnlazada` + `Nodo`): inserción O(1) al inicio, sin recorrer la estructura,  búsqueda O(n), eliminación O(n).
 - **Índice Invertido de Posts**: diccionario Python donde cada clave es un término y el valor es una `ListaEnlazada` de `post_id`.
 - **Índice Invertido de Usuarios**: diccionario Python donde cada clave es un nombre de usuario y el valor es un objeto `Usuario` con una `ListaEnlazada` de contactos.
 
 ## Funciones principales
 | Función | Archivo | Descripción |
 |---|---|---|
-| `cargar_dataset(ruta)` | main.py | Lee Tweets.csv, valida duplicados por tweet_id, construye índices |
+| `cargar_dataset(ruta)` | main.py | Lee Tweets.csv, construye índices |
 | `cargar_amigos(ruta)` | main.py | Carga relaciones usuario↔usuario desde amigos.csv |
 | `cargar_likes(ruta)` | main.py | Asocia likes a posts desde likes.csv |
 | `buscar_posts_por_termino()` | main.py | Búsqueda simple o intersección de términos en el índice |
@@ -40,4 +49,4 @@ en el mismo directorio.
 | `ListaEnlazada.insertar(dato)` | lista_enlazada.py | Inserta al inicio en O(1) |
 | `ListaEnlazada.existe(dato)` | lista_enlazada.py | Recorrido lineal O(n) para evitar duplicados |
 | `IndiceInvertidoPosts.buscar_multiples(palabras)` | indice_invertido.py | Intersección de listas de posteo para búsqueda AND |
-| `limpiar_texto(texto)` | utils.py | Normaliza unicode, elimina ruido y filtra stopwords |
+| `limpiar_texto(texto)` | utils.py | Convierte texto a minúsculas, elimina ruido textual y filtra stopwords. |

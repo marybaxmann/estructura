@@ -10,7 +10,7 @@ posts = []
 indice_posts = IndiceInvertidoPosts()
 indice_usuarios = IndiceInvertidoUsuarios()
 
-
+#cargar dataset
 def cargar_dataset(ruta_csv):
     if not os.path.exists(ruta_csv):
         print(f"[ERROR] No se encontró el archivo: {ruta_csv}")
@@ -23,26 +23,23 @@ def cargar_dataset(ruta_csv):
         for i, fila in enumerate(lector):
             texto     = fila.get("text", "").strip()
             autor     = fila.get("name", f"user_{i}").strip().lower()
-            aerolinea = fila.get("airline", "").strip()
-
-            post = Post(post_id=i, texto=texto, autor=autor)
-            posts.append(post)
 
             if not texto:
                 continue
+            
+            post = Post(post_id=i, texto=texto, autor=autor)
+            posts.append(post)
+
+            
 
             indice_usuarios.agregar_usuario(autor)
-
-            # if aerolinea:
-            #     indice_usuarios.agregar_contacto(autor, aerolinea)
-            #     indice_usuarios.agregar_usuario(aerolinea)
 
             palabras = limpiar_texto(texto)
             for palabra in palabras:
                 indice_posts.agregar(palabra, i)
 
     print(f"Dataset cargado: {len(posts)} posts | "
-          f"{indice_posts.total_terminos()} términos únicos | "
+          f"{indice_posts.total_terminos()} términos  | "
           f"{indice_usuarios.total_usuarios()} usuarios")
     return True
 
@@ -77,7 +74,7 @@ def cargar_likes(ruta_csv):
 
     print("Likes cargados correctamente.")
 
-
+#buscar post
 def buscar_posts_por_termino():
     consulta = input("Ingresa término(s) a buscar (separados por espacio): ").strip()
 
